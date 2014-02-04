@@ -5,7 +5,13 @@
  * 
  */
 ?>
-
-<?php wp_footer(); ?>
+        
+        <!-- /wrapper-inner -->
+        </div> 
+        <!-- /wrapper -->
+    </div>
+    
+    <?php wp_footer(); ?>
+    
 </body>
 </html>

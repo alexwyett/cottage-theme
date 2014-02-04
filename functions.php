@@ -1,9 +1,30 @@
 <?php
+
 /**
  * Functions and definitions
  */
-
 define('THEMENAME', 'cottagetheme');
+
+// Include css and javascript functions file
+require_once 'includes/functions_styles_and_css.php';
+
+/**
+ * Theme init
+ * 
+ * @since 1.0
+ */
+function cottagetheme_init()
+{
+    // Register nav menus
+    register_nav_menus(
+        array(
+            'main-menu' => __( 'Main Menu', THEMENAME ),
+            'quicklinks-menu' => __( 'Quicklinks Menu', THEMENAME ),
+            'footer-menu' => __( 'Footer Menu', THEMENAME )
+        )
+    );
+}
+add_action('init', 'cottagetheme_init');
 
 /**
  * Setup.
@@ -17,23 +38,21 @@ define('THEMENAME', 'cottagetheme');
  *
  * @since 1.0
  */
-function cottagetheme_setup() {
-	load_theme_textdomain( THEMENAME, get_template_directory() . '/languages' );
+function cottagetheme_setup()
+{
+    load_theme_textdomain( THEMENAME, get_template_directory() . '/languages' );
 
-	// This theme styles the visual editor with editor-style.css to match the theme style.
-	add_editor_style();
+    // This theme styles the visual editor with editor-style.css to match the theme style.
+    add_editor_style();
 
-	// Adds RSS feed links to <head> for posts and comments.
-	add_theme_support( 'automatic-feed-links' );
+    // Adds RSS feed links to <head> for posts and comments.
+    add_theme_support( 'automatic-feed-links' );
 
-	// This theme supports a variety of post formats.
-	add_theme_support( 'post-formats', array( 'aside', 'image', 'link', 'quote', 'status' ) );
+    // This theme supports a variety of post formats.
+    add_theme_support( 'post-formats', array( 'aside', 'image', 'link', 'quote', 'status' ) );
 
-	// This theme uses wp_nav_menu() in one location.
-	register_nav_menu( 'primary', __( 'Primary Menu', THEMENAME ) );
-
-	// This theme uses a custom image size for featured images, displayed on "standard" posts.
-	add_theme_support( 'post-thumbnails' );
+    // This theme uses a custom image size for featured images, displayed on "standard" posts.
+    add_theme_support( 'post-thumbnails' );
 }
 add_action( 'after_setup_theme', THEMENAME . '_setup' );
 
@@ -46,9 +65,9 @@ add_action( 'after_setup_theme', THEMENAME . '_setup' );
  * @since 1.0
  */
 function cottagetheme_page_menu_args( $args ) {
-	if ( ! isset( $args['show_home'] ) )
-		$args['show_home'] = true;
-	return $args;
+    if ( ! isset( $args['show_home'] ) )
+        $args['show_home'] = true;
+    return $args;
 }
 add_filter( 'wp_page_menu_args', THEMENAME . '_page_menu_args' );
 
@@ -61,13 +80,13 @@ add_filter( 'wp_page_menu_args', THEMENAME . '_page_menu_args' );
  */
 function cottagetheme_widgets_init() {
     register_sidebar( array(
-            'name' => __( 'Main Sidebar', THEMENAME ),
-            'id' => 'sidebar-1',
-            'description' => __( 'Appears on posts and pages except the optional Front Page template, which has its own widgets', THEMENAME ),
-            'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-            'after_widget' => '</aside>',
-            'before_title' => '<h3 class="widget-title">',
-            'after_title' => '</h3>',
+        'name' => __( 'Main Sidebar', THEMENAME ),
+        'id' => 'sidebar-1',
+        'description' => __( 'Appears on posts and pages except the optional Front Page template, which has its own widgets', THEMENAME ),
+        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+        'after_widget' => '</aside>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>',
     ) );
 }
 add_action( 'widgets_init', THEMENAME . '_widgets_init' );

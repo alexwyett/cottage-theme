@@ -1,0 +1,30 @@
+/**
+ * Cottage THeme stylesheet
+ *  
+ * @title       Web style guide 
+ * @author      Alex Wyett (alex@wyett.co.uk)
+ * @document    Main Static Page stylesheet
+ * @description This is the main stylesheet for the wordpress cottage theme. 
+ */
+
+/* ==========================================================================
+   Imports
+============================================================================ */
+
+// HTML5 Boilerplate
+@import 'normalize.less';
+
+// TOCC Mixins
+@import 'mixins.less';
+
+// Global variables
+@site-width: 960px;
+@site-gutter: 20px;
+
+.wrapper, .wrapper-inner { 
+    width: @site-width; 
+    margin: 0 auto; 
+}
+.wrapper-inner { 
+    width: (@site-width - (@site-gutter * 2));
+}

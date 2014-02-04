@@ -16,7 +16,7 @@ get_header(); ?>
 
 <?php else : ?>
 
-<?php _e( 'Apologies, but no results were found. Perhaps searching will help find a related post.', 'cottagetheme' ); ?>
+<?php _e( 'Apologies, but no results were found. Perhaps searching will help find a related post.', THEMENAME ); ?>
 <?php get_search_form(); ?>
 
     
