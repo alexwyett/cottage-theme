@@ -12,7 +12,7 @@
 <aside class="left">
     <div class="box">
         <section class="logo">
-            <a href="<?php get_home_url(); ?>">
+            <a href="<?php echo get_home_url(); ?>">
                 Home
             </a>
             <a href="tel:">Tel</a>

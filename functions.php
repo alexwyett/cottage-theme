@@ -219,11 +219,21 @@ endif;
 function alterSearchForm($form)
 {
     $form->setClass('qs-form');
-    $form->each('getType', 'label', function($ele) {
-        $ele->setTemplate(
+    $form->each('getType', 'text', function($ele) {
+        $ele->getParent()->setTemplate(
             '<div class="qs-item">
                 <label{implodeAttributes}>{getLabel}</label>
                 <div class="input">
+                    {renderChildren}
+                </div>
+            </div>'
+        );
+    });
+    $form->each('getType', 'select', function($ele) {
+        $ele->getParent()->setTemplate(
+            '<div class="qs-item">
+                <label{implodeAttributes}>{getLabel}</label>
+                <div class="select">
                     {renderChildren}
                 </div>
             </div>'

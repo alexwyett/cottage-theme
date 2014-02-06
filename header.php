@@ -48,9 +48,12 @@
                             array(
                                 'theme_location' => 'main-menu',
                                 'menu_class' => 'main-menu',
-                                'container' => 'nav'
+                                'container' => 'nav',
+                                'container_class' => 'main-menu'
                             )
                         );
                     ?>
 
                     <?php get_sidebar(); ?>
+                    
+                    <div class="right-panel">

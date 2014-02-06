@@ -75,9 +75,34 @@
  * Quicksearch Menu
  */
 .qs-form {
+    width: 190px; 
+    margin: 0 auto;
+    background: @menu-color;
+    padding: 5px 10px 10px;
+    
     fieldset {
         .reset();
         border: none;
+        
+        legend {
+            padding-top: 5px;
+            font-size: 24px;
+            color: @legend-color;
+        }
+        
+        label {
+            display: block; 
+            color: @label-color; 
+            line-height: 30px; 
+            font-size: 13px;
+        }
+        
+        .input { 
+            width: 186px;
+            background: #FFF;
+            padding: 2px;
+            height: 21px;
+        }
     }
 }
 .quick-search { width: 230px; background: #FFF; position: relative; padding-bottom: 10px; }
@@ -86,10 +111,7 @@
 .qs-header .main-logo { display: block; margin-bottom: 10px; }
 .static .qs-header .main-logo { margin-bottom: 15px; }
 .qs-header .tel-number { font-family: 'RokkittRegular', Arial, Helvetica, sans-serif; font-size: 34px; font-weight:normal; color: #004A55; }
-.qs-form { width: 190px; margin: 0 auto; background: #13B7BF; padding: 5px 10px 10px; }
-.qs-form legend { font-family: 'RokkittRegular', Arial, Helvetica, sans-serif; font-size: 28px; font-weight:normal; color: #FFF; }
-.qs-form label { display: block; color: #FFF; line-height: 30px; font-size: 13px; }
-.qs-form .input { width: 186px; background: #FFF; padding: 2px; height: 21px; }
+.qs-form 
 .qs-form .input input { border: none; border-width: 0px; margin-top: 2px; position: relative; }
 .qs-form input, .qs-form select { width: 100%; font-size: 13px; }
 .qs-form .actions { margin-top: 15px; }

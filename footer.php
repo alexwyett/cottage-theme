@@ -5,6 +5,7 @@
  * 
  */
 ?>
+                    </div><!-- /right -->
                 </div><!-- /main body inner -->
             </div><!-- /main body -->
             <footer>
