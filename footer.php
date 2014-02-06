@@ -5,7 +5,11 @@
  * 
  */
 ?>
-        
+                </div><!-- /main body inner -->
+            </div><!-- /main body -->
+            <footer>
+                
+            </footer>
         <!-- /wrapper-inner -->
         </div> 
         <!-- /wrapper -->

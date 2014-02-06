@@ -318,7 +318,13 @@
     list-style: none;
 }
 
-.lineHeight(@lh) {
+.line-height(@lh) {
     line-height: @lh;
     height: @lh;
+}
+
+.text-shadow(@x-axis: 1px, @y-axis: 1px, @blur: 2px, @color: #004A55) {
+    -moz-text-shadow: @x-axis @y-axis @blur @color; 
+    -webkit-text-shadow: @x-axis @y-axis @blur @color; 
+    text-shadow: @x-axis @y-axis @blur @color;
 }

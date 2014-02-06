@@ -9,7 +9,16 @@
  * @since 1.0
  */
 ?>
-
-<?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
-    <?php dynamic_sidebar( 'sidebar-1' ); ?>
-<?php endif; ?>
+<aside class="left">
+    <div class="box">
+        <section class="logo">
+            <a href="<?php get_home_url(); ?>">
+                Home
+            </a>
+            <a href="tel:">Tel</a>
+        </section>
+        <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
+            <?php dynamic_sidebar( 'sidebar-1' ); ?>
+        <?php endif; ?>
+    </div>
+</aside>

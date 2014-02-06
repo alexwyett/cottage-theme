@@ -12,19 +12,70 @@
 ============================================================================ */
 
 // HTML5 Boilerplate
-@import 'normalize.less';
+@import 'comp/normalize.less';
 
-// TOCC Mixins
-@import 'mixins.less';
+// Mixins
+@import 'comp/mixins.less';
+
+// Menus
+@import 'comp/menus.less';
 
 // Global variables
 @site-width: 960px;
 @site-gutter: 20px;
+@gutter-color: #FFF;
+@background-color: #D9E4E6;
+@link-hover-color: #004A55;
+@menu-color: #4D8188;
+@menu-link-color: #FFFFFF;
 
+// Layout options
 .wrapper, .wrapper-inner { 
     width: @site-width; 
     margin: 0 auto; 
 }
 .wrapper-inner { 
     width: (@site-width - (@site-gutter * 2));
+}
+.main-header {
+    .clearfix();
+}
+
+// Body
+html, body {
+    height: 100%; 
+    font: 1em/1.4em normal normal Arial, sans-serif;
+    background: @background-color;
+}
+.main-body { 
+    .box-shadow(0px 0px 8px #999999);
+    background: @gutter-color; 
+    behavior: url(/PIE.php); 
+    position: relative;
+}
+.main-body-inner { 
+    padding: 10px 10px 0 10px;
+}
+
+body.page-template-default {
+    aside.left {
+        float: left; 
+        width: 210px;
+
+        .box {
+            .absolute(-20px, auto, auto, -20px, 1);
+            background: @gutter-color; 
+        }
+    }
+    .body-right { 
+        float: right; 
+        width: 690px; 
+        padding-bottom: 100px; 
+    }
+}
+
+.box {
+    .box-shadow(0px 0px 8px #999999);
+    behavior: url(/PIE.php); 
+    position: relative;
 }

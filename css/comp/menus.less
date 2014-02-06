@@ -1,0 +1,98 @@
+
+
+/**
+* Header
+*/
+.quicklinks {
+    .reset();
+    float: right;
+    li {
+        .reset();
+        float: left;
+        margin-right: 18px;
+
+        a {
+            display: block; 
+            line-height: 40px; 
+            color: #000; 
+            font-size: 13px; 
+            text-decoration: none;
+
+            &:hover,
+            &:active,
+            &:visited,
+            &:active {
+                color: @link-hover-color;
+            }
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+/**
+ * Main Menu
+ */
+.main-menu {
+    .clearfix();
+    background: @menu-color;
+
+    ul {
+        .reset();
+        float: right;
+
+        li {
+            .reset();
+            float: left;
+            margin-right: 20px;
+
+            a {
+                color: @menu-link-color;
+                text-decoration: none;
+                font-size: 15px;
+                font-weight: bold;
+                .text-shadow();
+                .line-height(40px);
+
+                &:hover{
+                    color: @link-hover-color;
+                }
+            }
+
+            ul {
+                display: none;
+            }
+        }
+    }
+}
+
+
+
+
+/**
+ * Quicksearch Menu
+ */
+.qs-form {
+    fieldset {
+        .reset();
+        border: none;
+    }
+}
+.quick-search { width: 230px; background: #FFF; position: relative; padding-bottom: 10px; }
+.static .quick-search.box { height: 215px; }
+.qs-header { height: 190px; margin: 0 auto; padding: 20px 0 0; text-align: center; width: 190px; }
+.qs-header .main-logo { display: block; margin-bottom: 10px; }
+.static .qs-header .main-logo { margin-bottom: 15px; }
+.qs-header .tel-number { font-family: 'RokkittRegular', Arial, Helvetica, sans-serif; font-size: 34px; font-weight:normal; color: #004A55; }
+.qs-form { width: 190px; margin: 0 auto; background: #13B7BF; padding: 5px 10px 10px; }
+.qs-form legend { font-family: 'RokkittRegular', Arial, Helvetica, sans-serif; font-size: 28px; font-weight:normal; color: #FFF; }
+.qs-form label { display: block; color: #FFF; line-height: 30px; font-size: 13px; }
+.qs-form .input { width: 186px; background: #FFF; padding: 2px; height: 21px; }
+.qs-form .input input { border: none; border-width: 0px; margin-top: 2px; position: relative; }
+.qs-form input, .qs-form select { width: 100%; font-size: 13px; }
+.qs-form .actions { margin-top: 15px; }
+.qs-form .submit a { width: 186px; background: #004A55; border: 2px solid #FFF; height: 39px; line-height: 39px; font-family: 'RokkittRegular', Arial, Helvetica, sans-serif; font-size: 30px; font-weight:normal; color: #FFF; display: block; text-decoration: none; text-align: center; }
+.qs-form .advanced-cta { text-align: right; color: #FFF; text-align: right; margin-top: 8px; font-size: 14px; }
+.qs-form .advanced-cta a { color: #FFF; font-size: 13px; }

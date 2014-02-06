@@ -31,6 +31,26 @@
         <!-- Inner wrapper for bevel -->
         <div class="wrapper-inner">
 
-            <header id="masthead" class="site-header" role="banner">
-                <?php wp_nav_menu( array( 'theme_location' => 'quicklinks-menu', 'menu_class' => 'quicklinks-menu' ) ); ?>
+            <header id="masthead" class="main-header">
+                <?php 
+                    wp_nav_menu(
+                        array(
+                            'theme_location' => 'quicklinks-menu',
+                            'menu_class' => 'quicklinks'
+                        )
+                    );
+                ?>
             </header>
+            <div class="main-body">
+                <div class="main-body-inner">
+                    <?php 
+                        wp_nav_menu(
+                            array(
+                                'theme_location' => 'main-menu',
+                                'menu_class' => 'main-menu',
+                                'container' => 'nav'
+                            )
+                        );
+                    ?>
+
+                    <?php get_sidebar(); ?>

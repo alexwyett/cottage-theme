@@ -34,13 +34,14 @@ function cottagetheme_load_less()
     $output .= sprintf(
         '<script type="text/javascript" src="%s/js/less-1.6.2-min.js"></script>', 
         $path
-    );
-    $output .= '
+    );    
+    
+    $output .= sprintf('
         <script type="text/javascript">
             less.env = "development";
             less.watch();
-        </script>
-    ';
+        </script>'
+    );
     
     print $output;
 }

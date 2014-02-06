@@ -82,7 +82,7 @@ function cottagetheme_widgets_init() {
     register_sidebar( array(
         'name' => __( 'Main Sidebar', THEMENAME ),
         'id' => 'sidebar-1',
-        'description' => __( 'Appears on posts and pages except the optional Front Page template, which has its own widgets', THEMENAME ),
+        'description' => __( 'Appears on posts and pages.', THEMENAME ),
         'before_widget' => '<aside id="%1$s" class="widget %2$s">',
         'after_widget' => '</aside>',
         'before_title' => '<h3 class="widget-title">',
@@ -208,3 +208,46 @@ function cottagetheme_content_nav( $html_id ) {
     <?php endif;
 }
 endif;
+
+/**
+ * Change the search form to add more styling / elements to it
+ * 
+ * @param \aw\formfields\forms\Form $form Form object
+ * 
+ * @return void
+ */
+function alterSearchForm($form)
+{
+    $form->setClass('qs-form');
+    $form->each('getType', 'label', function($ele) {
+        $ele->setTemplate(
+            '<div class="qs-item">
+                <label{implodeAttributes}>{getLabel}</label>
+                <div class="input">
+                    {renderChildren}
+                </div>
+            </div>'
+        );
+    });
+    $form->each('getType', 'submit', function($ele) {
+        $ele->setTemplate(
+            '<div class="actions">
+                <div class="submit">
+                    <input type="{getType}"{implodeAttributes}>
+                </div>
+            </div>'
+        );
+    });
+    if (!is_front_page()) {
+        $form->getElementBy('getType', 'fieldset')
+            ->addChild(
+            \aw\formfields\forms\StaticForm::getNewLabelAndCheckboxField(
+                'Pet Friendly?'
+            )->getElementBy('getType', 'checkbox')
+            ->setValue('true')
+            ->setName(WPTABSAPIPLUGINSEARCHPREFIX . 'pets')
+            ->getParent()
+        );
+    }
+}
+add_action('wpTabsApiWidgetFormModify', 'alterSearchForm');
