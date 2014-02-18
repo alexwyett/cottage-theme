@@ -1,10 +1,4 @@
-<?php
-/**
- * The Header template for our theme
- * 
- * 
- */
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE 7]>
 <html class="ie ie7" <?php language_attributes(); ?>>
 <![endif]-->
@@ -15,45 +9,43 @@
 <html <?php language_attributes(); ?>>
 <!--<![endif]-->
 <head>
-<meta charset="<?php bloginfo( 'charset' ); ?>" />
-<meta name="viewport" content="width=device-width" />
-<title><?php wp_title( '|', true, 'right' ); ?></title>
-<link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
-<?php wp_head(); ?>
+    <meta charset="<?php bloginfo( 'charset' ); ?>" />
+    <meta name="viewport" content="width=device-width" />
+    <title><?php wp_title( '|', true, 'right' ); ?></title>
+    <link rel="profile" href="http://gmpg.org/xfn/11" />
+    <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+    <?php wp_head(); ?>
 </head>
-
 <body <?php body_class(); ?>>
     
     <!-- Main wrapper -->
     <div class="wrapper">
-        
-        <!-- Inner wrapper for bevel -->
-        <div class="wrapper-inner">
 
-            <header id="masthead" class="main-header">
+        <!-- theme header -->
+        <header id="masthead" class="main-header">
+            <div class="inner">
+                <p class="logo">
+                    <a href="<?php echo get_home_url(); ?>">
+                        Home
+                    </a>
+                </p>
+                <ul class="contact-details">
+                    <li>Email: <a href="mailto:<?php echo get_bloginfo( 'admin_email' ); ?>"><?php echo get_bloginfo( 'admin_email' ); ?></a></li>
+                    <li>Telephone: <?php echo of_get_option('office_telephone', '+44 123456789'); ?></li>
+                </ul>
                 <?php 
                     wp_nav_menu(
                         array(
-                            'theme_location' => 'quicklinks-menu',
-                            'menu_class' => 'quicklinks'
+                            'theme_location' => 'main-menu',
+                            'menu_class' => '',
+                            'container' => 'nav',
+                            'container_class' => 'main-menu'
                         )
                     );
                 ?>
-            </header>
-            <div class="main-body">
-                <div class="main-body-inner">
-                    <?php 
-                        wp_nav_menu(
-                            array(
-                                'theme_location' => 'main-menu',
-                                'menu_class' => 'main-menu',
-                                'container' => 'nav',
-                                'container_class' => 'main-menu'
-                            )
-                        );
-                    ?>
-
-                    <?php get_sidebar(); ?>
-                    
-                    <div class="right-panel">
+            </div>
+        </header>
+        <!-- Breadcrumb to go here -->
+        <nav class="breadcrumb">
+            <a href="/">Home</a>
+        </nav>

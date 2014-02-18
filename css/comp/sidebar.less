@@ -1,0 +1,29 @@
+
+aside.sidebar {
+    form, fieldset, select {
+        min-width: 100%;
+        width: 100%;
+    }
+}
+
+.qs-form {
+    background: @quicksearch-color;
+    padding: @gutter-width;
+    
+    fieldset {
+        .reset();
+        border: none;
+    }
+    
+    legend {
+        border-bottom: 1px solid @border-color;
+        padding-bottom: @gutter-width / 2;
+        width: 100%;
+    }
+    
+    label {
+        font-size: 0.9em;
+        display: block;
+        padding: (@gutter-width / 2) 0;
+    }
+}

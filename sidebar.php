@@ -9,16 +9,8 @@
  * @since 1.0
  */
 ?>
-<aside class="left">
-    <div class="box">
-        <section class="logo">
-            <a href="<?php echo get_home_url(); ?>">
-                Home
-            </a>
-            <a href="tel:">Tel</a>
-        </section>
-        <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
-            <?php dynamic_sidebar( 'sidebar-1' ); ?>
-        <?php endif; ?>
-    </div>
+<aside class="sidebar col-xs-6 col-md-3 pull-right">
+    <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
+        <?php dynamic_sidebar( 'sidebar-1' ); ?>
+    <?php endif; ?>
 </aside>

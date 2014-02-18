@@ -218,36 +218,6 @@ endif;
  */
 function alterSearchForm($form)
 {
-    $form->setClass('qs-form');
-    $form->each('getType', 'text', function($ele) {
-        $ele->getParent()->setTemplate(
-            '<div class="qs-item">
-                <label{implodeAttributes}>{getLabel}</label>
-                <div class="input">
-                    {renderChildren}
-                </div>
-            </div>'
-        );
-    });
-    $form->each('getType', 'select', function($ele) {
-        $ele->getParent()->setTemplate(
-            '<div class="qs-item">
-                <label{implodeAttributes}>{getLabel}</label>
-                <div class="select">
-                    {renderChildren}
-                </div>
-            </div>'
-        );
-    });
-    $form->each('getType', 'submit', function($ele) {
-        $ele->setTemplate(
-            '<div class="actions">
-                <div class="submit">
-                    <input type="{getType}"{implodeAttributes}>
-                </div>
-            </div>'
-        );
-    });
     if (!is_front_page()) {
         $form->getElementBy('getType', 'fieldset')
             ->addChild(
@@ -259,5 +229,133 @@ function alterSearchForm($form)
             ->getParent()
         );
     }
+    
+    // Remove name search
+    $form->getElementBy('getName', 'wp_name')->getParent()->remove();
+    
+    // Alter fromdate label
+    $form->getElementBy('getName', 'wp_fromDate')->getParent()->setLabel('From');
+    
+    bootstrapifyForm($form);
 }
 add_action('wpTabsApiWidgetFormModify', 'alterSearchForm');
+
+
+/**
+ * Brochure form processing
+ *
+ * @param \aw\formfields\form\Form $form Form object
+ *
+ * @return \aw\formfields\form\Form
+ */
+function brochureFormProcessing($brochureForm)
+{
+    bootstrapifyForm($brochureForm);
+    
+    // Set the validation call back
+    $brochureForm->setCallback(
+        function($brochureForm, $ele, $e) {
+            
+            // Add label message
+            if ($ele->getParent()->getType() == 'label') {
+                $ele->getParent()->setLabel(
+                    $ele->getParent()->getLabel()
+                    . ' - ' . $e->getMessage()
+                );
+            }
+        
+            $ele->getParent()->setTemplate(
+                str_replace(
+                    'form-group', 
+                    'form-group has-error', 
+                    $ele->getParent()->getTemplate()
+                )
+            );
+        }
+    );
+}
+add_action('wpTabsApiBrochurePreprocess', 'brochureFormProcessing');
+add_action('wpTabsApiOwnerpackPreprocess', 'brochureFormProcessing');
+
+/**
+ * Re-template a form so it fits in with the bootstrap theme
+ *
+ * @param \aw\formfields\form\Form &$form Form object
+ *
+ * @return \aw\formfields\form\Form
+ */
+function bootstrapifyForm($form)
+{
+    // Set form attributes
+    $form->setAttribute('role', 'form');
+
+    // Apply a different template to each of the labels
+    $form->each('getType', 'label', function($label) {
+        $label->setClass('control-label')
+            ->setTemplate(
+            '<div class="form-group">
+                <label{implodeAttributes}>{getLabel}</label>
+                <div class="">
+                    {renderChildren}
+                </div>
+            </div>'
+        );
+    });
+
+    $form->each('getType', 'text', function($textfield) {
+        $placeholder = $textfield->getParent()->getLabel();
+        $textfield->setClass('form-control')->setAttribute('placeholder', $placeholder);
+    });
+
+    $form->each('getType', 'textarea', function($textfield) {
+        $placeholder = $textfield->getParent()->getLabel();
+        $textfield->setClass('form-control')->setAttribute('placeholder', $placeholder);
+    });
+
+    $form->each('getType', 'select', function($textfield) {
+        $textfield->setClass('form-control');
+    });
+
+    $form->each('getType', 'checkbox', function($checkbox) {
+        $checkbox->getParent()
+                ->setClass('')
+                ->setTemplate(
+                    '<div class="form-group">
+                        <div class="">
+                            <label{implodeAttributes}>{renderChildren} {getLabel}</label>
+                        </div>
+                    </div>'
+                );
+    });
+
+    // Set the button template
+    $form->getElementBy('getType', 'submit')
+        ->setClass('btn btn-primary btn-block')
+        ->setTemplate(
+            '<div class="form-group">
+                <div class="">
+                    <input type="{getType}"{implodeAttributes}>
+                </div>
+            </div>');
+}
+/*
+ * Helper function to return the theme option value. If no value has been saved, it returns $default.
+ * Needed because options are saved as serialized strings.
+ *
+ * This code allows the theme to work without errors if the Options Framework plugin has been disabled.
+ */
+if ( !function_exists( 'of_get_option' ) ) {
+    function of_get_option($name, $default = false) {
+        $optionsframework_settings = get_option('optionsframework');
+        // Gets the unique option id
+        $option_name = $optionsframework_settings['id'];
+        if ( get_option($option_name) ) {
+            $options = get_option($option_name);
+        }
+        if ( isset($options[$name]) ) {
+            return $options[$name];
+        } else {
+            return $default;
+        }
+    }
+}

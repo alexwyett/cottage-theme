@@ -11,74 +11,74 @@
    Imports
 ============================================================================ */
 
-// HTML5 Boilerplate
-@import 'comp/normalize.less';
-
 // Mixins
 @import 'comp/mixins.less';
 
-// Menus
-@import 'comp/menus.less';
+// Header
+@import 'comp/header.less';
+
+// breadcrumb
+@import 'comp/breadcrumb.less';
+
+// Sidebar
+@import 'comp/sidebar.less';
+
+// Footer
+@import 'comp/footer.less';
 
 // Global variables
-@site-width: 960px;
-@site-gutter: 20px;
+@site-width: 1000px;
+@site-inner-width: 940px;
+@header-height: 100px;
+@logo-width: 280px;
+@gutter-width: 10px;
 @gutter-color: #FFF;
-@background-color: #D9E4E6;
+@background-color: #FFF;
+@wrapper-color: @background-color;
+@theme-color: #407849;
+@theme-color-dark: #285A34;
+@theme-color-light: #2A5E38;
+@theme-color-highlight: #417B4B;
 @link-hover-color: #004A55;
-@menu-color: #4D8188;
 @menu-link-color: #FFFFFF;
-@legend-color: #FFFFFF;
-@label-color: #FFFFFF;
+@footer-color: #EEE;
+@footer-height: 100px;
+@border-color: #CCC;
+@quicksearch-color: #EEE;
+
+* { // No to box model!!1
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+// Body
+html, body {
+    height: 100%; 
+    background: @background-color;
+}
+
+// layout for sticky footer
+.wrapper {
+    .relative();
+    min-height: 100%;
+    overflow: hidden;
+    background: @wrapper-color;
+}
 
 // Layout options
 .wrapper, .wrapper-inner { 
     width: @site-width; 
     margin: 0 auto; 
 }
-.wrapper-inner { 
-    width: (@site-width - (@site-gutter * 2));
-}
-.main-header {
-    .clearfix();
-}
-
-// Body
-html, body {
-    height: 100%; 
-    font: 1em/1.4em normal normal Arial, sans-serif;
-    background: @background-color;
-}
-.main-body {
-    .box-shadow(0px 0px 8px #999999);
-    background: @gutter-color; 
-    behavior: url(/PIE.php); 
-    position: relative;
     
-    .main-body-inner { 
-        .clearfix();
-        padding: 10px;
-    }
+.inner {
+    .clearfix();
+    .relative();
+    width: @site-inner-width;
+    margin: 0 auto;
 }
 
-aside.left {
-    float: left; 
-    width: 210px;
-
-    .box {
-        .absolute(-20px, auto, auto, -20px, 1);
-        background: @gutter-color; 
-    }
-}
-.right-panel { 
-    float: right; 
-    width: 690px; 
-    padding-bottom: 100px; 
-}
-
-.box {
-    .box-shadow(0px 0px 8px #999999);
-    behavior: url(/PIE.php); 
-    position: relative;
-    padding: 10px;
+.wrapper-inner {
+    padding-bottom: @footer-height; // Footer height
 }
