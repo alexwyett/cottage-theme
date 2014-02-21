@@ -11,21 +11,6 @@
    Imports
 ============================================================================ */
 
-// Mixins
-@import 'comp/mixins.less';
-
-// Header
-@import 'comp/header.less';
-
-// breadcrumb
-@import 'comp/breadcrumb.less';
-
-// Sidebar
-@import 'comp/sidebar.less';
-
-// Footer
-@import 'comp/footer.less';
-
 // Global variables
 @site-width: 1000px;
 @site-inner-width: 940px;
@@ -46,6 +31,30 @@
 @border-color: #CCC;
 @quicksearch-color: #EEE;
 
+@unavailable: #EEE;
+@available: #428bca;
+@changeover: #5cb85c;
+@selected: #fcf8e3;
+
+// Mixins
+@import 'comp/mixins.less';
+
+// Header
+@import 'comp/header.less';
+
+// breadcrumb
+@import 'comp/breadcrumb.less';
+
+// Sidebar
+@import 'comp/sidebar.less';
+
+// Property Pages
+@import 'comp/cottage.less';
+
+// Footer
+@import 'comp/footer.less';
+
+
 * { // No to box model!!1
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
@@ -53,9 +62,13 @@
 }
 
 // Body
-html, body {
-    height: 100%; 
+html {
+    position: relative;
+    min-height: 100%;
     background: @background-color;
+    body {
+        margin-bottom: @footer-height;
+    }
 }
 
 // layout for sticky footer

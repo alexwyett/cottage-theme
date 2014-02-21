@@ -230,9 +230,6 @@ function alterSearchForm($form)
         );
     }
     
-    // Remove name search
-    $form->getElementBy('getName', 'wp_name')->getParent()->remove();
-    
     // Alter fromdate label
     $form->getElementBy('getName', 'wp_fromDate')->getParent()->setLabel('From');
     
@@ -244,9 +241,9 @@ add_action('wpTabsApiWidgetFormModify', 'alterSearchForm');
 /**
  * Brochure form processing
  *
- * @param \aw\formfields\form\Form $form Form object
+ * @param \aw\formfields\form\Form $brochureForm Form object
  *
- * @return \aw\formfields\form\Form
+ * @return void
  */
 function brochureFormProcessing($brochureForm)
 {
@@ -267,7 +264,7 @@ function brochureFormProcessing($brochureForm)
             $ele->getParent()->setTemplate(
                 str_replace(
                     'form-group', 
-                    'form-group has-error', 
+                    'form-group has-error ', 
                     $ele->getParent()->getTemplate()
                 )
             );
@@ -276,6 +273,54 @@ function brochureFormProcessing($brochureForm)
 }
 add_action('wpTabsApiBrochurePreprocess', 'brochureFormProcessing');
 add_action('wpTabsApiOwnerpackPreprocess', 'brochureFormProcessing');
+
+
+/**
+ * Brochure form processing
+ *
+ * @param array $array Array containing $booking, $property, $bookingForm objects
+ *
+ * @return void
+ */
+function bookingFormProcessing($array)
+{
+    extract($array);
+    bootstrapifyForm($bookingForm);
+
+    $ele = $bookingForm->getElementBy('getLegend', 'About your Party');
+    $ele->getParent()->each('getType', 'label', function ($label) {
+        $label->setTemplate(
+            str_replace(
+                'form-group',
+                'form-group col-sm-3 ',
+                $label->getTemplate()
+            )
+        );
+    });
+    
+    // Set the validation call back
+    $bookingForm->setCallback(
+        function($bookingForm, $ele, $e) {
+            
+            // Add label message
+            if ($ele->getParent()->getType() == 'label') {
+                $ele->getParent()->setLabel(
+                    $ele->getParent()->getLabel()
+                    . ' - ' . $e->getMessage()
+                );
+            }
+        
+            $ele->getParent()->setTemplate(
+                str_replace(
+                    'form-group', 
+                    'form-group has-error ', 
+                    $ele->getParent()->getTemplate()
+                )
+            );
+        }
+    );
+}
+add_action('wpTabsApiBookingPreprocess', 'bookingFormProcessing');
 
 /**
  * Re-template a form so it fits in with the bootstrap theme
@@ -290,7 +335,7 @@ function bootstrapifyForm($form)
     $form->setAttribute('role', 'form');
 
     // Apply a different template to each of the labels
-    $form->each('getType', 'label', function($label) {
+    $form->each('getType', 'label', function ($label) {
         $label->setClass('control-label')
             ->setTemplate(
             '<div class="form-group">
@@ -302,18 +347,32 @@ function bootstrapifyForm($form)
         );
     });
 
-    $form->each('getType', 'text', function($textfield) {
+    $form->each('getType', 'text', function ($textfield) {
         $placeholder = $textfield->getParent()->getLabel();
         $textfield->setClass('form-control')->setAttribute('placeholder', $placeholder);
     });
 
-    $form->each('getType', 'textarea', function($textfield) {
+    $form->each('getType', 'textarea', function ($textfield) {
         $placeholder = $textfield->getParent()->getLabel();
         $textfield->setClass('form-control')->setAttribute('placeholder', $placeholder);
     });
 
-    $form->each('getType', 'select', function($textfield) {
+    $form->each('getType', 'select', function ($textfield) {
         $textfield->setClass('form-control');
+    });
+    
+    $form->each('getType', 'fieldset', function ($fieldset) {
+        if (in_array($fieldset->getClass(), array('your-details', 'your-address'))) {
+            $fieldset->each('getType', 'label', function ($label) {
+                $label->setTemplate(
+                    str_replace(
+                        'form-group',
+                        'form-group col-sm-6',
+                        $label->getTemplate()
+                    )
+                );
+            });
+        }
     });
 
     $form->each('getType', 'checkbox', function($checkbox) {
@@ -321,9 +380,7 @@ function bootstrapifyForm($form)
                 ->setClass('')
                 ->setTemplate(
                     '<div class="form-group">
-                        <div class="">
-                            <label{implodeAttributes}>{renderChildren} {getLabel}</label>
-                        </div>
+                        <label{implodeAttributes}>{renderChildren} {getLabel}</label>
                     </div>'
                 );
     });
@@ -333,12 +390,10 @@ function bootstrapifyForm($form)
         ->setClass('btn btn-primary btn-block')
         ->setTemplate(
             '<div class="form-group">
-                <div class="">
-                    <input type="{getType}"{implodeAttributes}>
-                </div>
+                <input type="{getType}"{implodeAttributes}>
             </div>');
 }
-/*
+/**
  * Helper function to return the theme option value. If no value has been saved, it returns $default.
  * Needed because options are saved as serialized strings.
  *
@@ -358,4 +413,108 @@ if ( !function_exists( 'of_get_option' ) ) {
             return $default;
         }
     }
+}
+
+/**
+ * Custom breadcrumb
+ */
+function custom_breadcrumb() {
+  if(!is_home()) {
+    echo '<ol class="breadcrumb">';
+    echo '<li><a href="'.get_option('home').'">Home</a></li>';
+    if (is_single()) {
+        echo '<li>';
+        the_title();
+        echo '</li>';
+    } elseif (is_category()) {
+      echo '<li>';
+      single_cat_title();
+      echo '</li>';
+    } elseif (is_page() && (!is_front_page())) {
+      echo '<li>';
+      the_title();
+      echo '</li>';
+    } elseif (is_tag()) {
+      echo '<li>Tag: ';
+      single_tag_title();
+      echo '</li>';
+    } elseif (is_day()) {
+      echo'<li>Archive for ';
+      the_time('F jS, Y');
+      echo'</li>';
+    } elseif (is_month()) {
+      echo'<li>Archive for ';
+      the_time('F, Y');
+      echo'</li>';
+    } elseif (is_year()) {
+      echo'<li>Archive for ';
+      the_time('Y');
+      echo'</li>';
+    } elseif (is_author()) {
+      echo'<li>Author Archives';
+      echo'</li>';
+    } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) {
+      echo '<li>Blog Archives';
+      echo'</li>';
+    } elseif (is_search()) {
+      echo'<li>Search Results';
+      echo'</li>';
+    }
+    echo '</ol>';
+  }
+}
+
+
+
+function get_breadcrumbs(
+    $starting_page, 
+    $deco = array(
+        'before_all' => '<ol class="breadcrumb">', 
+        'after_all' => '</ol>', 
+        'before_each' => '<li>', 
+        'after_each' => '</li>', 
+        'separator' => ''
+    )
+) {
+	// get our "decorations"
+	extract($deco);
+    
+	// reverse it so the highest (most-parent?) page is first
+	$ids = array_reverse(_get_breadcrumbs($post));
+    
+	// loop through each, create decorated links
+	$links = array();
+	foreach ($ids as $url => $title) {
+		$links[] = sprintf(
+            '%s<a href="%s">%s</a>%s',
+            $before_each,
+            $url,
+            $title,
+            $after_each
+        );
+	}
+    
+	// return it all together
+	return $before_all . implode( $separator, $links ) . $after_all;
+}
+
+//recursive function for getting all parent, grandparent, etc. IDs
+//not intended for direct use
+function _get_breadcrumbs( $starting_page, $container = array() ) {
+
+	//make sure you're working with an object
+	$sp = ( ! is_object( $starting_page ) ) ? get_post( $starting_page ) : $starting_page;
+    
+	//make sure to insert starting page only once
+	if ( ! in_array( get_permalink( $sp->ID ), $container ) ) {
+		$container[ get_permalink( $sp->ID ) ] = get_the_title( $sp->ID );
+    }
+	
+	//if parent, recursion!
+	if ( $sp->post_parent > 0 ) {
+		$container[ get_permalink( $sp->post_parent ) ] = get_the_title( $sp->post_parent );
+		$container = _get_breadcrumbs( $sp->post_parent, $container );
+	}
+    
+	return $container;
 }

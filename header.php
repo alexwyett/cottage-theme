@@ -46,6 +46,16 @@
             </div>
         </header>
         <!-- Breadcrumb to go here -->
-        <nav class="breadcrumb">
-            <a href="/">Home</a>
-        </nav>
+        <?php
+            global $post;
+            echo get_breadcrumbs(
+                $post->ID,
+                array(
+                    'before_all' => '<ol class="breadcrumb"><li><a href="'.get_option('home').'">Home</a></li>', 
+                    'after_all' => '</ol>', 
+                    'before_each' => '<li>', 
+                    'after_each' => '</li>', 
+                    'separator' => ''
+                )
+            );
+        ?>

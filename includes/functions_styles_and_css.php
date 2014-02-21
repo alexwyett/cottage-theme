@@ -10,7 +10,7 @@ function cottagetheme_load_scripts()
     // Register css
     wp_register_style(
         THEMENAME . '_bootstrap', 
-        '//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css'
+        '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
     );
     
     // Load css
